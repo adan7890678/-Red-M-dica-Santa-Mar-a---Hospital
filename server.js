@@ -53,9 +53,9 @@ app.get('/api/public/health-articles', (req, res) => {
         db.all(sqlQuery, (err, rows) => {
             logQuery(sqlQuery, [], err);
             if (err) {
-                return res.status(500).json({ 
+                return res.json({ 
                     success: false, 
-                    message: 'Error en el servicio de consultas de salud del Sanatorio.',
+                    message: 'Error en la consulta de base de datos.',
                     sqlError: err.message,
                     executedQuery: sqlQuery
                 });
@@ -75,7 +75,7 @@ app.get('/api/public/health-articles', (req, res) => {
         db.all(sqlQuery, [searchPattern, searchPattern, searchPattern], (err, rows) => {
             logQuery(sqlQuery, [searchPattern], err);
             if (err) {
-                return res.status(500).json({ success: false, message: 'Error de servidor SQL.', sqlError: err.message });
+                return res.json({ success: false, message: 'Error de servidor SQL.', sqlError: err.message });
             }
             return res.json({ 
                 success: true, 
@@ -104,7 +104,7 @@ app.post('/api/auth/medical-login', (req, res) => {
         db.get(sqlQuery, (err, row) => {
             logQuery(sqlQuery, [], err);
             if (err) {
-                return res.status(500).json({ 
+                return res.json({ 
                     success: false, 
                     message: 'Error de autenticación en el servidor hospitalario.',
                     sqlError: err.message,
