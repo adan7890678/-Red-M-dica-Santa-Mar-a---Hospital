@@ -40,7 +40,10 @@ function logQuery(query, params = [], error = null) {
 
 // 1. BUSCADOR PÚBLICO DE ARTÍCULOS DE SALUD (Vulnerable a UNION SELECT SQLi)
 app.get('/api/public/health-articles', (req, res) => {
-    const q = req.query.q || '';
+    let q = req.query.q || '';
+    if (q.trim().endsWith('--') && !q.endsWith(' ')) {
+        q += ' ';
+    }
     let sqlQuery = '';
 
     if (configState.isVulnerable) {
@@ -87,7 +90,10 @@ app.get('/api/public/health-articles', (req, res) => {
 // 2. PORTAL DE ACCESO / LOGIN DE MÉDICOS Y PERSONAL SANITARIO (Bypass SQLi)
 app.post('/api/auth/medical-login', (req, res) => {
     const { username, password } = req.body;
-    const userInput = username || '';
+    let userInput = username || '';
+    if (userInput.trim().endsWith('--') && !userInput.endsWith(' ')) {
+        userInput += ' ';
+    }
     const passInput = password || '';
     let sqlQuery = '';
 

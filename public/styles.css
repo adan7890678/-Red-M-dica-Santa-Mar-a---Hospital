@@ -722,7 +722,7 @@ body {
     color: var(--text-muted);
     background-color: #ffffff;
     border: 1px solid #e2e8f0;
-    padding: 0.4rem 0.6rem;
+    padding: 0.5rem 0.6rem;
     border-radius: 4px;
 }
 
@@ -730,11 +730,50 @@ body {
 .cheat-item code {
     display: block;
     background: #f1f5f9;
-    padding: 0.2rem 0.4rem;
+    padding: 0.3rem 0.4rem;
     border-radius: 3px;
     color: #0f172a;
-    margin: 0.2rem 0;
+    margin: 0.3rem 0;
     font-family: var(--font-code);
+    word-break: break-all;
+}
+
+.step-desc {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin: 0.2rem 0 0.4rem 0;
+    line-height: 1.2;
+}
+
+.payload-box {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 0.4rem;
+    border-radius: 4px;
+    margin-top: 0.3rem;
+}
+
+.payload-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--primary);
+    display: block;
+}
+
+.btn-run-payload {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    margin-top: 2px;
+    transition: background-color 0.2s;
+}
+
+.btn-run-payload:hover {
+    background-color: var(--primary-hover);
 }
 
 .db-viewer-box {

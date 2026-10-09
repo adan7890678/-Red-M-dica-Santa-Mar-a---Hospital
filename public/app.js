@@ -351,5 +351,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Ejecutor de Payloads Interactivo desde la Guía
+    document.querySelectorAll('.btn-run-payload').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const target = btn.getAttribute('data-target');
+            const payload = btn.getAttribute('data-payload');
+
+            if (target === 'health') {
+                // Activar pestaña de noticias de salud
+                const navArticles = document.querySelector('.nav-btn[data-target="tab-articles"]');
+                if (navArticles) navArticles.click();
+
+                // Llenar el input y ejecutar la búsqueda
+                healthSearchInput.value = payload;
+                fetchHealthArticles(payload);
+            } else if (target === 'login') {
+                // Abrir modal de login y rellenar usuario
+                const loginModal = document.getElementById('login-modal');
+                if (loginModal) loginModal.classList.remove('hidden');
+                const userInput = document.getElementById('login-user');
+                if (userInput) userInput.value = payload;
+            } else if (target === 'profile') {
+                // Ir a pestaña de perfil y rellenar especialidad
+                const navProfile = document.querySelector('.nav-btn[data-target="tab-profile"]');
+                if (navProfile) navProfile.click();
+                const specInput = document.getElementById('prof-especialidad');
+                if (specInput) specInput.value = payload;
+            }
+
+            // Opcional: cerrar drawer en dispositivos móviles
+            if (window.innerWidth < 768) {
+                hudDrawer.classList.add('hidden');
+            }
+        });
+    });
+
     updateLiveQuery();
 });
