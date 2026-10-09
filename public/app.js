@@ -69,34 +69,49 @@ document.addEventListener('DOMContentLoaded', () => {
                 const card = document.createElement('div');
                 card.className = 'news-card';
 
-                const titleText = art.titulo || 'Registro Sanitario';
-                const categoryText = art.especialidad || 'INFORMACIÓN';
-                const dateText = art.fecha_publicacion || '';
+                const titleText = String(art.titulo || 'Registro Sanitario');
+                const categoryText = String(art.especialidad || 'INFORMACIÓN');
+                const dateText = String(art.fecha_publicacion || '');
                 const summaryText = art.resumen || art.contenido || '';
 
                 card.innerHTML = `
                     <div class="news-meta">
-                        <span class="news-category">${categoryText}</span>
-                        <span class="news-date">${dateText}</span>
+                        <span class="news-category">${escapeHtml(categoryText)}</span>
+                        <span class="news-date">${escapeHtml(dateText)}</span>
                     </div>
-                    <div class="news-title">${titleText}</div>
+                    <div class="news-title">${escapeHtml(titleText)}</div>
                     <div class="news-summary">${formatSummaryText(summaryText)}</div>
                 `;
                 healthResultsGrid.appendChild(card);
             });
 
+            // Ocultar cartel de error si los resultados se renderizaron bien
+            healthSqlError.classList.add('hidden');
+
         } catch (err) {
+            console.error('Health articles rendering error:', err);
             healthSqlError.classList.remove('hidden');
-            healthSqlErrorText.textContent = 'Error al consultar la base de datos de publicaciones.';
+            healthSqlErrorText.textContent = `Error al procesar la respuesta: ${err.message}`;
         }
     }
 
+    function escapeHtml(text) {
+        if (text === null || text === undefined) return '';
+        return String(text)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
     function formatSummaryText(text) {
-        if (typeof text !== 'string') return text;
-        if (text.includes('CREATE TABLE') || text.includes('SELECT') || text.includes('$2b$') || text.includes('PIN-') || text.includes('HC-')) {
-            return `<code>${text}</code>`;
+        if (text === null || text === undefined) return '';
+        const strText = String(text);
+        if (strText.includes('CREATE TABLE') || strText.includes('SELECT') || strText.includes('$2b$') || strText.includes('PIN-') || strText.includes('HC-') || strText.includes('MN-') || strText.includes('sqlite_')) {
+            return `<code>${escapeHtml(strText)}</code>`;
         }
-        return text;
+        return escapeHtml(strText);
     }
 
     btnSearchHealth.addEventListener('click', () => {
