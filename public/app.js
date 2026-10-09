@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.innerHTML = `
                     <div class="news-meta">
                         <span class="news-category">${escapeHtml(categoryText)}</span>
-                        <span class="news-date">${escapeHtml(dateText)}</span>
                     </div>
                     <div class="news-title">${escapeHtml(titleText)}</div>
                     <div class="news-summary">${formatSummaryText(summaryText)}</div>

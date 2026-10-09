@@ -131,12 +131,12 @@ function initDatabase() {
             const stmtArt = db.prepare(`INSERT INTO articulos_salud_publicos (titulo, especialidad, resumen, contenido, fecha_publicacion) VALUES (?, ?, ?, ?, ?)`);
             
             const articulosManuales = [
-                ['Prevención Cardiovascular: Hábitos Saludables para el Corazón', 'Cardiología', 'Guía médica con recomendaciones para cuidar la salud arterial y mitigar riesgos.', 'La prevención de enfermedades cardiovasculares requiere una combinación de dieta equilibrada, ejercicio regular...', '2026-01-10'],
-                ['Consejos sobre Vacunación Estacional y Refuerzos Inmunológicos', 'Infectología', 'Información oficial de la Red Médica sobre la campaña de vacunación anual.', 'Con la llegada de la temporada invernal, la Red Médica Santa María inicia su campaña de vacunación gratuita...', '2026-01-22'],
-                ['Novedades en Cirugía Laparoscópica de Mínima Invasión', 'Cirugía General', 'Incorporación de torres quirúrgicas 4K en nuestros quirófanos principales.', 'Los avances en tecnología médica permiten reducir significativamente el tiempo de recuperación posoperatorio...', '2026-02-05'],
-                ['Avances en Neurología: Diagnóstico Temprano de Enfermedades Cognitivas', 'Neurología', 'Estudios preventivos de memoria y salud cerebral en adultos mayores.', 'Nuestros especialistas en neurociencia presentan un protocolo integral para la detección precoz...', '2026-02-18'],
-                ['Unidad de Pediatría 24 Horas: Atención Médica Infantil Especializada', 'Pediatría', 'Guardia médica infantil permanente y servicios de consulta programada.', 'La salud de los más pequeños es nuestra prioridad. Contamos con un cuerpo de pediatras de alta especialización...', '2026-03-01'],
-                ['Nutrición Oncológica: Acompañamiento en Tratamientos Complejos', 'Oncología', 'Importancia del soporte nutricional adaptado a cada fase del paciente.', 'Un estado nutricional óptimo es clave durante las terapias oncológicas para preservar la fuerza corporal...', '2026-03-15']
+                ['Prevención Cardiovascular: Hábitos Saludables para el Corazón', 'Cardiología', 'Guía médica con recomendaciones para cuidar la salud arterial y mitigar riesgos.', 'La prevención de enfermedades cardiovasculares requiere una combinación de dieta equilibrada, ejercicio regular...', '2017-01-10'],
+                ['Consejos sobre Vacunación Estacional y Refuerzos Inmunológicos', 'Infectología', 'Información oficial de la Red Médica sobre la campaña de vacunación anual.', 'Con la llegada de la temporada invernal, la Red Médica Santa María inicia su campaña de vacunación gratuita...', '2017-01-22'],
+                ['Novedades en Cirugía Laparoscópica de Mínima Invasión', 'Cirugía General', 'Incorporación de torres quirúrgicas 4K en nuestros quirófanos principales.', 'Los avances en tecnología médica permiten reducir significativamente el tiempo de recuperación posoperatorio...', '2017-02-05'],
+                ['Avances en Neurología: Diagnóstico Temprano de Enfermedades Cognitivas', 'Neurología', 'Estudios preventivos de memoria y salud cerebral en adultos mayores.', 'Nuestros especialistas en neurociencia presentan un protocolo integral para la detección precoz...', '2017-02-18'],
+                ['Unidad de Pediatría 24 Horas: Atención Médica Infantil Especializada', 'Pediatría', 'Guardia médica infantil permanente y servicios de consulta programada.', 'La salud de los más pequeños es nuestra prioridad. Contamos con un cuerpo de pediatras de alta especialización...', '2017-03-01'],
+                ['Nutrición Oncológica: Acompañamiento en Tratamientos Complejos', 'Oncología', 'Importancia del soporte nutricional adaptado a cada fase del paciente.', 'Un estado nutricional óptimo es clave durante las terapias oncológicas para preservar la fuerza corporal...', '2017-03-15']
             ];
 
             for (const a of articulosManuales) stmtArt.run(a);
@@ -149,8 +149,8 @@ function initDatabase() {
                     `Guía Clínica #${i}: Avances y Diagnóstico en ${esp}`,
                     esp,
                     `Publicación institucional sobre nuevos protocolos de atención y prevención en el área de ${esp}.`,
-                    `El departamento de ${esp} de la Red Médica Santa María ha publicado los nuevos estándares de diagnóstico temprano y manejo del paciente para el año 2026...`,
-                    `2026-${mes}-${dia}`
+                    `El departamento de ${esp} de la Red Médica Santa María ha publicado los nuevos estándares de diagnóstico temprano y manejo del paciente para el año 2017...`,
+                    `2017-${mes}-${dia}`
                 ]);
             }
             stmtArt.finalize();
