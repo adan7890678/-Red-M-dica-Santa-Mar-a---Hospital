@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Médica Santa María - Sanatorio e Institución de Salud</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header Hospitalario Institucional Clásico -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <div class="logo-icon"><i class="fa-solid fa-hospital-user"></i></div>
+                <div class="brand-text">
+                    <span class="company-name">RED MÉDICA SANTA MARÍA</span>
+                    <span class="portal-name">Portal Institucional de Servicios Sanitarios</span>
+                </div>
+            </div>
+
+            <nav class="main-nav">
+                <button class="nav-btn active" data-target="tab-home">
+                    <i class="fa-solid fa-house-medical"></i> Inicio
+                </button>
+                <button class="nav-btn" data-target="tab-health">
+                    <i class="fa-solid fa-notes-medical"></i> Publicaciones & Salud
+                </button>
+                <button class="nav-btn" data-target="tab-services">
+                    <i class="fa-solid fa-stethoscope"></i> Especialidades
+                </button>
+                <button class="nav-btn" data-target="tab-profile" id="nav-btn-profile" style="display: none;">
+                    <i class="fa-solid fa-user-doctor"></i> Mi Portal Médico
+                </button>
+                <button class="nav-btn login-nav-btn" id="btn-open-login">
+                    <i class="fa-solid fa-right-to-bracket"></i> <span id="user-status-text">Acceso Personal Médico</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Barra Superior Informativa -->
+    <div class="system-status-bar">
+        <div class="status-container">
+            <span class="status-item"><i class="fa-solid fa-phone"></i> Emergencias 24 Horas: (011) 4590-8800</span>
+            <span class="status-item"><i class="fa-solid fa-location-dot"></i> Av. Las Heras 2850, Sede Central</span>
+            <span class="status-item"><i class="fa-solid fa-clock"></i> Horario de Atención: Lun a Vie 08:00 a 20:00 hs</span>
+        </div>
+    </div>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+
+        <!-- TAB 1: INICIO Y PORTADA DEL SANATORIO -->
+        <section id="tab-home" class="tab-pane active">
+            <div class="hero-card">
+                <div class="hero-content">
+                    <span class="hero-tag"><i class="fa-solid fa-circle-check"></i> INSTITUCIÓN CERTIFICADA</span>
+                    <h1>Atención Médica Profesional e Infraestructura Sanitaria de Referencia</h1>
+                    <p>La Red Médica Santa María brinda servicios de diagnóstico, internación, cirugías programadas y atención ambulatoria con profesionales de alta trayectoria médica.</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="document.querySelector('[data-target=\'tab-health\']').click()">
+                            <i class="fa-solid fa-magnifying-glass"></i> Consultar Artículos de Salud
+                        </button>
+                        <button class="btn btn-secondary" onclick="document.querySelector('[data-target=\'tab-services\']').click()">
+                            <i class="fa-solid fa-stethoscope"></i> Ver Especialidades Médicas
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grilla de Servicios Médicos -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-ambulance"></i></div>
+                    <h3>Guardia Adultos y Pediatría</h3>
+                    <p>Servicio de urgencias médicas las 24 horas con salas de observación y shock room totalmente equipado.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-microscope"></i></div>
+                    <h3>Laboratorio e Imágenes</h3>
+                    <p>Estudios de alta complejidad, tomografía axial computada, resonancia magnética y análisis clínicos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-user-doctor"></i></div>
+                    <h3>Consultorios Externos</h3>
+                    <p>Atención ambulatoria programada en cardiología, neurología, traumatología, gastroenterología y más.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: ARTÍCULOS DE SALUD Y BUSCADOR PÚBLICO (PUNTO DE INYECCIÓN SQLi LIMPIO) -->
+        <section id="tab-health" class="tab-pane">
+            <div class="page-intro">
+                <h2>Artículos y Publicaciones Sanitarias</h2>
+                <p>Consulte información médica de interés público, boletines epidemiológicos y recomendaciones preventivas.</p>
+            </div>
+
+            <div class="search-box-card">
+                <div class="search-input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="health-search-input" placeholder="Buscar por tema o especialidad médica (ej. Cardiología, Vacunación...)" value="">
+                    <button id="btn-search-health" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Buscar Artículos</button>
+                </div>
+                <div class="search-hint">
+                    Ingrese una palabra clave para consultar la base de publicaciones del Sanatorio.
+                </div>
+            </div>
+
+            <!-- Alerta de Error de BD Estándar (Sin etiquetas artificiales) -->
+            <div id="health-sql-error" class="sql-error-banner hidden">
+                <div class="error-header">
+                    <i class="fa-solid fa-circle-exclamation"></i> Error de Servidor al procesar la solicitud
+                </div>
+                <pre id="health-sql-error-text"></pre>
+            </div>
+
+            <div class="results-meta hidden" id="health-results-meta">
+                <span>Registros encontrados: <strong id="health-count">0</strong> resultados</span>
+            </div>
+
+            <!-- Grid de Resultados -->
+            <div class="news-grid" id="health-results-grid">
+                <!-- Se llena dinámicamente -->
+            </div>
+        </section>
+
+        <!-- TAB 3: ESPECIALIDADES MÉDICAS -->
+        <section id="tab-services" class="tab-pane">
+            <div class="page-intro">
+                <h2>Especialidades y Departamentos Médicos</h2>
+                <p>Nuestra institución cuenta con servicios médicos de alta especialización.</p>
+            </div>
+
+            <div class="solutions-list">
+                <div class="solution-item">
+                    <i class="fa-solid fa-heart-pulse sol-icon"></i>
+                    <div>
+                        <h3>Cardiología y Ecocardiografía</h3>
+                        <p>Evaluación clínica cardiovascular, ergometrías, prueba de esfuerzo y unidades de arritmias.</p>
+                    </div>
+                </div>
+                <div class="solution-item">
+                    <i class="fa-solid fa-brain sol-icon"></i>
+                    <div>
+                        <h3>Neurología y Neurofisiología</h3>
+                        <p>Diagnóstico de trastornos cerebrales, electroencefalografía y seguimiento neuroquirúrgico.</p>
+                    </div>
+                </div>
+                <div class="solution-item">
+                    <i class="fa-solid fa-baby sol-icon"></i>
+                    <div>
+                        <h3>Pediatría y Neonatología</h3>
+                        <p>Control de niño sano, vacunación infantil e internación pediátrica especializada.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: PERFIL MÉDICO (Tras Login) -->
+        <section id="tab-profile" class="tab-pane">
+            <div class="page-intro">
+                <h2>Gestión de Perfil de Personal Sanitario</h2>
+                <p>Actualización de datos registrados en el padrón del Sanatorio.</p>
+            </div>
+
+            <div class="form-card profile-form-card">
+                <div class="user-badge-header" id="user-badge-info">
+                    <!-- Datos de usuario logueado -->
+                </div>
+
+                <form id="profile-form" style="margin-top: 1.5rem;">
+                    <div class="form-group">
+                        <label>Correo Institucional Registrado:</label>
+                        <input type="email" id="prof-email" value="" required readonly>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Especialidad Médica:</label>
+                            <input type="text" id="prof-especialidad" value="" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Departamento Hospitalario:</label>
+                            <input type="text" id="prof-dept" value="" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar Cambios</button>
+                </form>
+
+                <div id="profile-response-box" class="result-feedback-box hidden" style="margin-top: 20px;"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL DE LOGIN / ACCESO A PERSONAL MÉDICO -->
+    <div class="modal-overlay hidden" id="login-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-user-doctor"></i> Acceso a Intranet Sanitaria</h3>
+                <button class="modal-close" id="btn-close-login">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtext">Ingrese su correo institucional o matrícula profesional para ingresar.</p>
+
+                <form id="login-form">
+                    <div class="form-group">
+                        <label>Matrícula Profesional / Correo Institucional:</label>
+                        <input type="text" id="login-user" placeholder="ej. r.gutierrez@santamariahealth.org" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contraseña:</label>
+                        <input type="password" id="login-pass" placeholder="••••••••••••" required>
+                    </div>
+
+                    <div id="login-error-box" class="sql-error-banner hidden" style="margin-bottom: 15px;"></div>
+
+                    <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTÓN DISCRETO DEL INSPECTOR DOCENTE (DEVTOOLS) -->
+    <button class="security-hud-toggle" id="btn-toggle-hud" title="Inspector Docente / Consultas SQL">
+        <i class="fa-solid fa-sliders"></i> <span>DevTools</span>
+    </button>
+
+    <!-- PANEL LATERAL DEL INSPECTOR DOCENTE (DEVTOOLS DRAWER) -->
+    <aside class="hud-drawer hidden" id="hud-drawer">
+        <div class="hud-header">
+            <div class="hud-title">
+                <i class="fa-solid fa-sliders"></i>
+                <span>Inspector Docente de SQL</span>
+            </div>
+            <button class="hud-close-btn" id="btn-close-hud">&times;</button>
+        </div>
+
+        <div class="hud-body">
+            
+            <!-- Conmutador Vulnerable vs Seguro -->
+            <div class="hud-section mode-switcher-box">
+                <span class="hud-label">Modo de Ejecución del Backend:</span>
+                <div class="toggle-control">
+                    <button class="mode-toggle-btn active-vulnerable" id="btn-set-vulnerable">
+                        VULNERABLE (Concatenado)
+                    </button>
+                    <button class="mode-toggle-btn" id="btn-set-secure">
+                        SEGURO (Prepared Statements)
+                    </button>
+                </div>
+                <p class="mode-desc" id="mode-desc-text">
+                    Las entradas del usuario se concatenan directamente en la consulta SQL.
+                </p>
+            </div>
+
+            <!-- Visor de la Última Consulta SQL en Vivo -->
+            <div class="hud-section">
+                <div class="hud-section-header">
+                    <span class="hud-label">Consulta SQL Compilada en Servidor:</span>
+                    <button class="btn-xs" id="btn-refresh-status"><i class="fa-solid fa-rotate-right"></i></button>
+                </div>
+                <div class="sql-code-box">
+                    <pre><code id="live-sql-code">SELECT * FROM articulos_salud_publicos...</code></pre>
+                </div>
+            </div>
+
+            <!-- Inspector de Base de Datos SQLite (Ver Tablas Ocultas) -->
+            <div class="hud-section">
+                <div class="hud-section-header">
+                    <span class="hud-label">Tablas Ocultas SQLite:</span>
+                    <button class="btn-xs" id="btn-view-db"><i class="fa-solid fa-eye"></i> Inspeccionar BD</button>
+                </div>
+                <div id="db-viewer-content" class="db-viewer-box hidden">
+                    <!-- Tablas ocultas -->
+                </div>
+            </div>
+
+            <!-- Guía de Desafíos para el Profesor -->
+            <div class="hud-section">
+                <span class="hud-label">Vectores de Auditoría para la Clase:</span>
+                <div class="cheatsheet-accordion">
+                    <details class="cheat-item">
+                        <summary>1. Enumerar Tablas (`sqlite_master`)</summary>
+                        <code>' UNION SELECT 1, type, name, tbl_name, sql, 6 FROM sqlite_master --</code>
+                    </details>
+
+                    <details class="cheat-item">
+                        <summary>2. Volcar Usuarios & Hashes (`personal_medico_usuarios`)</summary>
+                        <code>' UNION SELECT 1, matricula_medica, nombre, email, password_hash, rol FROM personal_medico_usuarios --</code>
+                    </details>
+
+                    <details class="cheat-item">
+                        <summary>3. Volcar Pacientes (`historias_clinicas_pacientes`)</summary>
+                        <code>' UNION SELECT 1, numero_expediente, nombre_paciente, dni_ssn, diagnostico_principal, tratamiento_prescripto FROM historias_clinicas_pacientes --</code>
+                    </details>
+
+                    <details class="cheat-item">
+                        <summary>4. Escalado a Root en UPDATE</summary>
+                        <code>Cardiología', rol = 'root_sysadmin</code>
+                    </details>
+                </div>
+            </div>
+
+            <!-- Restablecer Base de Datos -->
+            <div class="hud-section text-center">
+                <button class="btn btn-danger btn-block" id="btn-reset-db">
+                    <i class="fa-solid fa-arrow-rotate-left"></i> Reiniciar Base de Datos
+                </button>
+            </div>
+
+        </div>
+    </aside>
+
+    <!-- Footer Institucional Clásico -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 Red Médica Santa María. Todos los derechos reservados. Dirección de Sistemas Sanitarios.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
