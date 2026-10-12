@@ -267,10 +267,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const dbViewerContent = document.getElementById('db-viewer-content');
     const btnResetDb = document.getElementById('btn-reset-db');
 
-    btnToggleHud.addEventListener('click', () => {
-        hudDrawer.classList.toggle('hidden');
-        updateLiveQuery();
-    });
+    if (btnToggleHud) {
+        btnToggleHud.addEventListener('click', () => {
+            hudDrawer.classList.toggle('hidden');
+            updateLiveQuery();
+        });
+    }
 
     btnCloseHud.addEventListener('click', () => {
         hudDrawer.classList.add('hidden');
